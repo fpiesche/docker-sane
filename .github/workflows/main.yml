@@ -1,4 +1,4 @@
-name: Build SANE Docker images
+name: Build Docker images
 
 on:
   # Allow manual runs.
@@ -9,9 +9,14 @@ on:
       - main
     paths-ignore:
       - '**/*.md'
+  # Run on PRs except for documentation
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
 
 env:
   PLATFORMS: linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/amd64
+  IMAGE_NAME: sane
 
 jobs:
 
@@ -20,8 +25,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: recursive
 
       - name: Docker Setup QEMU
         uses: docker/setup-qemu-action@v1
@@ -42,11 +45,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build and push SANE Docker image
+      - name: Build and push ${{ env.IMAGE_NAME }} Docker image
         uses: docker/build-push-action@v2
         with:
           tags: |
-            florianpiesche/sane:latest
-            ghcr.io/${{ github.repository_owner }}/sane:latest
+            florianpiesche/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
           platforms: ${{ env.PLATFORMS }}
           push: true
