@@ -1,4 +1,4 @@
-FROM alpine:3.14.2
+FROM alpine:3.15.0
 
 RUN apk add --update --no-cache bash sane-saned sane-utils sane-backend-epson sane-backend-epson2 busybox-extras && \
     echo "6566 stream tcp nowait root.root /usr/sbin/saned saned" >/etc/inetd.conf && \
