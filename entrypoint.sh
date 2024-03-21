@@ -16,4 +16,4 @@ for BACKEND in ${BACKENDS}; do
 done
 
 echo "Launching saned"
-/usr/sbin/saned -l -e
+exec /usr/sbin/saned -l -e
