@@ -11,9 +11,9 @@ for HOST in ${ALLOW_HOSTS}; do
 done
 
 for BACKEND in ${BACKENDS}; do
-  echo "Adding $BACKEND to allowed hosts"
+  echo "Adding $BACKEND to allowed backend"
   echo $BACKEND >> /etc/sane.d/dll.conf
 done
 
 echo "Launching saned"
-inetd -f -e
+/usr/sbin/saned -l -e
