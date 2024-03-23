@@ -62,10 +62,10 @@ jobs:
             type=raw,value=v{{date 'YYYY.MM.DD'}}
           labels: |
             org.opencontainers.image.title=saned
-            org.opencontainers.image.description=A Dockerised version of the scanner service SANEd, based on Alpine Linux images.
-            org.opencontainers.image.vendor=Florian Piesche <florian@yellowkeycard.net>
-            org.opencontainers.image.authors=https://github.com/fpiesche/docker-sane/graphs/contributors
-            org.opencontainers.image.licenses=GPL-3.0
+            org.opencontainers.image.description="A Dockerised version of the scanner service SANEd, based on Alpine Linux images."
+            org.opencontainers.image.vendor="Florian Piesche <florian@yellowkeycard.net>"
+            org.opencontainers.image.authors="https://github.com/fpiesche/docker-sane/graphs/contributors"
+            org.opencontainers.image.licenses="GPL-3.0"
 
       - name: Build and push ${{ env.IMAGE_NAME }} Docker image
         uses: docker/build-push-action@v5
