@@ -50,11 +50,27 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_TOKEN }}
 
+      - name: Generate Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=v{{date 'YYYY.MM.DD'}}
+          labels: |
+            org.opencontainers.image.title=saned
+            org.opencontainers.image.description="A Dockerised version of the scanner service SANEd, based on Alpine Linux images."
+            org.opencontainers.image.vendor="Florian Piesche <florian@yellowkeycard.net>"
+            org.opencontainers.image.authors="https://github.com/fpiesche/docker-sane/graphs/contributors"
+            org.opencontainers.image.licenses="GPL-3.0"
+
       - name: Build and push ${{ env.IMAGE_NAME }} Docker image
         uses: docker/build-push-action@v5
         with:
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME || 'nobody' }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ env.PLATFORMS }}
           push: ${{ env.PUSH_IMAGE }}
