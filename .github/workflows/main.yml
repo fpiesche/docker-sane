@@ -51,7 +51,6 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Generate Docker metadata
-        if: ${{ env.PUSH_IMAGE == 'true' }}
         id: meta
         uses: docker/metadata-action@v4
         with:
